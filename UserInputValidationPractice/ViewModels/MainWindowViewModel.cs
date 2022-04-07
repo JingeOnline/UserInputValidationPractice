@@ -22,20 +22,46 @@ namespace UserInputValidationPractice.ViewModels
             get { return _createdOrder; }
             set { SetProperty(ref _createdOrder, value); }
         }
-        public ICommand CreateSaveCommand { get; set; }
+        public ICommand CreateOrderCommand { get; set; }
+
+        private Customer _createdCustomer;
+        public Customer CreatedCustomer
+        {
+            get { return _createdCustomer; }
+            set { SetProperty(ref _createdCustomer, value); }
+        }
+        public ICommand CreateCustomerCommand { get; set; }
+
         public MainWindowViewModel()
         {
-            CreateSaveCommand = new DelegateCommand(createSave, canCreateSave).ObservesProperty(()=>CreatedOrder.IsValid);
+            CreateOrderCommand = new DelegateCommand(createOrderSave, canCreateOrderSave).ObservesProperty(()=>CreatedOrder.IsValid);
+            CreateCustomerCommand = new DelegateCommand(createCustomerSave, canCreateCustomerSave);
             CreatedOrder = new Order() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
+            CreatedCustomer=new Customer() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
         }
 
-        private bool canCreateSave()
+        private bool canCreateCustomerSave()
+        {
+            return true;
+        }
+
+        private void createCustomerSave()
+        {
+            MessageBox.Show($"Id={CreatedCustomer.Id}\n" +
+                $"ProductName={CreatedCustomer.ProductName}\n" +
+                $"PickupDate={CreatedCustomer.PickupDate}\n" +
+                $"DeliverDate={CreatedCustomer.DeliverDate}\n" +
+                $"Min_Temp={CreatedCustomer.Min_Temp}\n" +
+                $"Max_Temp={CreatedCustomer.Max_Temp}\n");
+        }
+
+        private bool canCreateOrderSave()
         {
             bool canSave = CreatedOrder.IsValid;
             return canSave;
         }
 
-        private void createSave()
+        private void createOrderSave()
         {
             MessageBox.Show($"Id={CreatedOrder.Id}\n" +
                 $"ProductName={CreatedOrder.ProductName}\n" + 
