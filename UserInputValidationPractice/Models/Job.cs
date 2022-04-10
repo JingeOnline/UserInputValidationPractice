@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace UserInputValidationPractice.Models
 {
+    /// <summary>
+    /// 使用DataAnnotations验证
+    /// 常用验证规则:Required,RegularExpression,StringLength,Range,Phone,Email,Url,CreditCard
+    /// 先Set属性，再执行验证。
+    /// </summary>
     public class Job:BindableBase,IDataErrorInfo
     {
         private int _id;

@@ -11,10 +11,19 @@ using System.Threading.Tasks;
 namespace UserInputValidationPractice.Models
 {
     /// <summary>
-    /// 该类继承了Prism.Mvvm.BindableBase类，可以作为任需要验证的Model类的父类。
+    /// 该类继承了Prism.Mvvm.BindableBase类，可以作为任何使用INotifyDataErrorInfo方法的、需要验证的Model类的父类。
+    /// 使用INotifyDataErrorInfo的优点是可以异步的得到验证结果，并且可以返回一个属性的多条验证错误信息。
     /// </summary>
     public class ValidationModelBase: BindableBase, INotifyDataErrorInfo
     {
+        //程序执行顺序：
+        //1，当执行属性的Set方法时，调用HasErrors属性
+        //2. 如果HasErrors返回true，则执行GetErrors方法
+        //3. 之后触发ErrorsChanged事件
+        //4. 再次执行GetErrors方法
+
+
+
         //使用字典来储存每个属性，和该属性的错误
         private readonly Dictionary<string, List<string>> _errorByPropertyName = new Dictionary<string, List<string>>();
 
@@ -23,7 +32,7 @@ namespace UserInputValidationPractice.Models
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         //如果验证失败，有错误，需要返回true。
-        //如果字典中有错误，返回true，没有错误，返回false
+        //如果字典中有错误，返回true，没有错误，返回false。也就是检查整个对象有没有错误。
         public bool HasErrors => _errorByPropertyName.Any();
 
 

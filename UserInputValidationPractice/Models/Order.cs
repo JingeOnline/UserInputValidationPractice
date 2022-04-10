@@ -5,7 +5,10 @@ using Prism.Mvvm;
 
 namespace UserInputValidationPractice.Models
 {
-    
+    /// <summary>
+    /// 使用IDataErrorInfo，优点是简单易用。
+    /// 缺点是无论输入值是否合法，都会执行属性的set方法，然后再去String this[string PropertyName]查询，返回验证结果。
+    /// </summary>
     public class Order:BindableBase, IDataErrorInfo
     {
         private int _id;
@@ -59,6 +62,9 @@ namespace UserInputValidationPractice.Models
         }
 
         private bool _isValid;
+        /// <summary>
+        /// 改属性是用来判断整个对象有没有非法的属性，只有所有属性都通过验证，才返回true。
+        /// </summary>
         public bool IsValid
         {
             get { return _isValid; }

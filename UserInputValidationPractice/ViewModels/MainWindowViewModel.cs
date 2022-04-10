@@ -61,20 +61,11 @@ namespace UserInputValidationPractice.ViewModels
             return !CreatedCustomer.HasErrors;
         }
 
-        private void createCustomerSave()
-        {
-            MessageBox.Show($"Id={CreatedCustomer.Id}\n" +
-                $"ProductName={CreatedCustomer.ProductName}\n" +
-                $"PickupDate={CreatedCustomer.PickupDate}\n" +
-                $"DeliverDate={CreatedCustomer.DeliverDate}\n" +
-                $"Min_Temp={CreatedCustomer.Min_Temp}\n" +
-                $"Max_Temp={CreatedCustomer.Max_Temp}\n");
-        }
-
         private bool canCreateOrderSave()
         {
             bool canSave = CreatedOrder.IsValid;
             return canSave;
+            //return true;
         }
 
         private void createOrderSave()
@@ -95,6 +86,16 @@ namespace UserInputValidationPractice.ViewModels
                 $"DeliverDate={CreatedJob.DeliverDate}\n" +
                 $"Min_Temp={CreatedJob.Min_Temp}\n" +
                 $"Max_Temp={CreatedJob.Max_Temp}\n");
+        }
+
+        private void createCustomerSave()
+        {
+            MessageBox.Show($"Id={CreatedCustomer.Id}\n" +
+                $"ProductName={CreatedCustomer.ProductName}\n" +
+                $"PickupDate={CreatedCustomer.PickupDate}\n" +
+                $"DeliverDate={CreatedCustomer.DeliverDate}\n" +
+                $"Min_Temp={CreatedCustomer.Min_Temp}\n" +
+                $"Max_Temp={CreatedCustomer.Max_Temp}\n");
         }
     }
 }
