@@ -26,6 +26,7 @@ namespace UserInputValidationPractice.Models
         //如果字典中有错误，返回true，没有错误，返回false
         public bool HasErrors => _errorByPropertyName.Any();
 
+
         //针对某个特定的属性，返回其错误列表
         public IEnumerable GetErrors(string propertyName)
         {

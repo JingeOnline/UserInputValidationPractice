@@ -65,7 +65,7 @@ namespace UserInputValidationPractice.Models
             set { SetProperty(ref _isValid, value); }
         }
 
-        #region 设置该方法是因为，当初始化载入对象的时候，会检查对象的所有属性，然会返回IsValid。
+        #region 设置该方法是因为，当初始化载入对象的时候，会检查对象的所有属性。即使前面的属性有错误，只要后面的属性没错误，最终会返回IsValid。
         //用来储存对象中每个属性的验证状态，合法为true，非法为false，key为属性名称。
         private Dictionary<string, bool> PropertyValidDictionary = new Dictionary<string, bool>();
 

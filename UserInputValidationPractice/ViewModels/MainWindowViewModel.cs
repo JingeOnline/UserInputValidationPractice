@@ -22,7 +22,6 @@ namespace UserInputValidationPractice.ViewModels
             get { return _createdOrder; }
             set { SetProperty(ref _createdOrder, value); }
         }
-        public ICommand CreateOrderCommand { get; set; }
 
         private Customer _createdCustomer;
         public Customer CreatedCustomer
@@ -30,19 +29,36 @@ namespace UserInputValidationPractice.ViewModels
             get { return _createdCustomer; }
             set { SetProperty(ref _createdCustomer, value); }
         }
+
+        private Job _createdJob;
+        public Job CreatedJob
+        {
+            get { return _createdJob; }
+            set { SetProperty(ref _createdJob, value); }
+        }
+        public ICommand CreateOrderCommand { get; set; }
         public ICommand CreateCustomerCommand { get; set; }
+        public ICommand CreateJobCommand { get; set; }
+
 
         public MainWindowViewModel()
         {
             CreateOrderCommand = new DelegateCommand(createOrderSave, canCreateOrderSave).ObservesProperty(()=>CreatedOrder.IsValid);
-            CreateCustomerCommand = new DelegateCommand(createCustomerSave, canCreateCustomerSave);
+            CreateCustomerCommand = new DelegateCommand(createCustomerSave, canCreateCustomerSave).ObservesProperty(()=>CreatedCustomer.HasErrors);
+            CreateJobCommand = new DelegateCommand(createJobSave, canCreateJobSave);
             CreatedOrder = new Order() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
             CreatedCustomer=new Customer() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
+            CreatedJob=new Job() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
+        }
+
+        private bool canCreateJobSave()
+        {
+            return true;
         }
 
         private bool canCreateCustomerSave()
         {
-            return true;
+            return !CreatedCustomer.HasErrors;
         }
 
         private void createCustomerSave()
@@ -69,6 +85,16 @@ namespace UserInputValidationPractice.ViewModels
                 $"DeliverDate={CreatedOrder.DeliverDate}\n" +
                 $"Min_Temp={CreatedOrder.Min_Temp}\n" +
                 $"Max_Temp={CreatedOrder.Max_Temp}\n");
+        }
+
+        private void createJobSave()
+        {
+            MessageBox.Show($"Id={CreatedJob.Id}\n" +
+                $"ProductName={CreatedJob.ProductName}\n" +
+                $"PickupDate={CreatedJob.PickupDate}\n" +
+                $"DeliverDate={CreatedJob.DeliverDate}\n" +
+                $"Min_Temp={CreatedJob.Min_Temp}\n" +
+                $"Max_Temp={CreatedJob.Max_Temp}\n");
         }
     }
 }

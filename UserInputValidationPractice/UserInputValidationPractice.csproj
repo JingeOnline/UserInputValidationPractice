@@ -66,6 +66,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\ValidationModelBase.cs" />
     <Compile Include="Services\Service.cs" />
