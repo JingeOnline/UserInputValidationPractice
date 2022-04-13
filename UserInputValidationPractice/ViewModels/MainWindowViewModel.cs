@@ -4,6 +4,7 @@ using UserInputValidationPractice.Models;
 using Prism.Commands;
 using System;
 using System.Windows;
+using Prism.Regions;
 
 namespace UserInputValidationPractice.ViewModels
 {
@@ -16,86 +17,35 @@ namespace UserInputValidationPractice.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        private Order _createdOrder;
-        public Order CreatedOrder
+        public ICommand NavToOrderCommand { get; set; }
+        public ICommand NavToCustomerCommand { get; set; }
+        public ICommand NavToJobCommand { get; set; }
+
+        private IRegionManager _regionManager;
+
+        public MainWindowViewModel(IRegionManager regionManager)
         {
-            get { return _createdOrder; }
-            set { SetProperty(ref _createdOrder, value); }
+            NavToCustomerCommand = new DelegateCommand(navToCustomer);
+            NavToOrderCommand = new DelegateCommand(navToOrder);
+            NavToJobCommand = new DelegateCommand(navToJob);
+            _regionManager = regionManager;
         }
 
-        private Customer _createdCustomer;
-        public Customer CreatedCustomer
+        private void navToJob()
         {
-            get { return _createdCustomer; }
-            set { SetProperty(ref _createdCustomer, value); }
+            //将目标Region导航到目标View
+            //参数都为字符串，第一个参数是Region名称，第二个参数是View的URI（在App.xmal.cs中设置View的URI）
+            _regionManager.RequestNavigate("ContentRegion","JobView");
         }
 
-        private Job _createdJob;
-        public Job CreatedJob
+        private void navToOrder()
         {
-            get { return _createdJob; }
-            set { SetProperty(ref _createdJob, value); }
-        }
-        public ICommand CreateOrderCommand { get; set; }
-        public ICommand CreateCustomerCommand { get; set; }
-        public ICommand CreateJobCommand { get; set; }
-
-
-        public MainWindowViewModel()
-        {
-            CreateOrderCommand = new DelegateCommand(createOrderSave, canCreateOrderSave).ObservesProperty(()=>CreatedOrder.IsValid);
-            CreateCustomerCommand = new DelegateCommand(createCustomerSave, canCreateCustomerSave).ObservesProperty(()=>CreatedCustomer.HasErrors);
-            CreateJobCommand = new DelegateCommand(createJobSave, canCreateJobSave);
-            CreatedOrder = new Order() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
-            CreatedCustomer=new Customer() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
-            CreatedJob=new Job() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
+            _regionManager.RequestNavigate("ContentRegion", "OrderView");
         }
 
-        private bool canCreateJobSave()
+        private void navToCustomer()
         {
-            return true;
-        }
-
-        private bool canCreateCustomerSave()
-        {
-            return !CreatedCustomer.HasErrors;
-        }
-
-        private bool canCreateOrderSave()
-        {
-            bool canSave = CreatedOrder.IsValid;
-            return canSave;
-            //return true;
-        }
-
-        private void createOrderSave()
-        {
-            MessageBox.Show($"Id={CreatedOrder.Id}\n" +
-                $"ProductName={CreatedOrder.ProductName}\n" + 
-                $"PickupDate={CreatedOrder.PickupDate}\n" + 
-                $"DeliverDate={CreatedOrder.DeliverDate}\n" +
-                $"Min_Temp={CreatedOrder.Min_Temp}\n" +
-                $"Max_Temp={CreatedOrder.Max_Temp}\n");
-        }
-
-        private void createJobSave()
-        {
-            MessageBox.Show($"Id={CreatedJob.Id}\n" +
-                $"ProductName={CreatedJob.ProductName}\n" +
-                $"PickupDate={CreatedJob.PickupDate}\n" +
-                $"DeliverDate={CreatedJob.DeliverDate}\n" +
-                $"Min_Temp={CreatedJob.Min_Temp}\n" +
-                $"Max_Temp={CreatedJob.Max_Temp}\n");
-        }
-
-        private void createCustomerSave()
-        {
-            MessageBox.Show($"Id={CreatedCustomer.Id}\n" +
-                $"ProductName={CreatedCustomer.ProductName}\n" +
-                $"PickupDate={CreatedCustomer.PickupDate}\n" +
-                $"DeliverDate={CreatedCustomer.DeliverDate}\n" +
-                $"Min_Temp={CreatedCustomer.Min_Temp}\n" +
-                $"Max_Temp={CreatedCustomer.Max_Temp}\n");
+            _regionManager.RequestNavigate("ContentRegion", "CustomerView");
         }
     }
 }

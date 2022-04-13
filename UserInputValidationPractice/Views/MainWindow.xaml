@@ -5,6 +5,10 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="350" Width="525">
     <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="64"/>
+            <Setter Property="Margin" Value="4,0"/>
+        </Style>
         <Style x:Key="TextBoxBaseStyle" TargetType="TextBox">
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
@@ -20,149 +24,21 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
     </Window.Resources>
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <TextBlock Text="Order - IDataErrorInfo" HorizontalAlignment="Center"/>
-                <Grid Margin="8">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Id:" Grid.Row="0"/>
-                    <Label Content="ProductName:" Grid.Row="1"/>
-                    <Label Content="PickupDate:" Grid.Row="2"/>
-                    <Label Content="DeliverDate:" Grid.Row="3"/>
-                    <Label Content="Min_Temp:" Grid.Row="4"/>
-                    <Label Content="Max_Temp:" Grid.Row="5"/>
-                    <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateOrderCommand}" Margin="0,8"/>
-                    <!--显示ExceptionError，可以显示的设置ValidatesOnDataErrors=true,默认值就是true，所以省略-->
-                    <!--需要显示的设置属性ValidatesOnDataErrors=True，否则只会显示ExceptionError，IDataErrorInfo里面定义的错误不会显示。-->
-                    <TextBox Text="{Binding CreatedOrder.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
-                                    ValidatesOnDataErrors=True}" 
-                                    Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedOrder.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
-                                    ValidatesOnDataErrors=True}" 
-                                    Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <!--Without ConverterCulture, the date Format is not stable. Change the format as you change the date.-->
-                    <!--不适用ConverterCulture显示的数据格式不太稳定。 当你修改日期的时候，格式经常会来回跳转。-->
-                    <TextBox Text="{Binding CreatedOrder.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
-                                    StringFormat='{}{0:dd/MM/yy HH:mm:ss}', ConverterCulture='en-AU', Delay=500, ValidatesOnDataErrors=True}"
-                                    Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedOrder.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
-                                    StringFormat='{}{0:dd/MM/yy HH:mm:ss}', ConverterCulture='en-AU', Delay=500, ValidatesOnDataErrors=True}" 
-                                    Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <!--这里使用了Delay=500，设置了500毫秒的延迟，否则根本无法输入小数点。每次一输，就验证失败，根本无法set属性值。-->
-                    <!--另一种解决办法是，把UpdateSourceTrigger改成LostFocus。-->
-                    <TextBox Text="{Binding CreatedOrder.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
-                                    ValidatesOnDataErrors=True}" 
-                                    Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedOrder.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
-                                    ValidatesOnDataErrors=True}" 
-                                    Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                </Grid>
-                
-                <TextBlock Text="Customer - INotifyDataErrorInfo" HorizontalAlignment="Center"/>
-                <Grid Margin="8">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Id:" Grid.Row="0"/>
-                    <Label Content="ProductName:" Grid.Row="1"/>
-                    <Label Content="PickupDate:" Grid.Row="2"/>
-                    <Label Content="DeliverDate:" Grid.Row="3"/>
-                    <Label Content="Min_Temp:" Grid.Row="4"/>
-                    <Label Content="Max_Temp:" Grid.Row="5"/>
-                    <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateCustomerCommand}" Margin="0,8"/>
-                    <!--ValidatesOnNotifyDataErrors=True不需要显示的指明，默认就是True-->
-                    <TextBox Text="{Binding CreatedCustomer.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                 Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedCustomer.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                 Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedCustomer.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
-                 Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedCustomer.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
-                 Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedCustomer.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500}" 
-                 Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedCustomer.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500}" 
-                 Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                </Grid>
-
-                <TextBlock Text="Job - IDataErrorInfo + Data Annotations" HorizontalAlignment="Center"/>
-                <Grid Margin="8">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Id:" Grid.Row="0"/>
-                    <Label Content="ProductName:" Grid.Row="1"/>
-                    <Label Content="PickupDate:" Grid.Row="2"/>
-                    <Label Content="DeliverDate:" Grid.Row="3"/>
-                    <Label Content="Min_Temp:" Grid.Row="4"/>
-                    <Label Content="Max_Temp:" Grid.Row="5"/>
-                    <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateJobCommand}" Margin="0,8"/>
-                    <!--使用IDataErrorInfo + Data Annotations进行验证。
-                    ValidatesOnDataErrors=True是一定要写的，但NotifyOnValidationError=True的作用现在还没看出来。-->
-                    <!--NotifyOnValidationError属性表示当错误发生时，是否触发Validation.Error事件，可以再xmal中为任何控件添加该事件和事件处理器。-->
-                    <TextBox Text="{Binding CreatedJob.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True}" 
-                        Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedJob.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True}" 
-                        Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedJob.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True,NotifyOnValidationError=True,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
-                        Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedJob.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True,NotifyOnValidationError=True,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
-                        Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedJob.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
-                        NotifyOnValidationError=True,ValidatesOnDataErrors=True}" 
-                        Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                    <TextBox Text="{Binding CreatedJob.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
-                        NotifyOnValidationError=True,ValidatesOnDataErrors=True}" 
-                        Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBoxValidationTooltip}"/>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
+            <Button Content="Order" Command="{Binding NavToOrderCommand}"/>
+            <Button Content="Customer" Command="{Binding NavToCustomerCommand}"/>
+            <Button Content="Job" Command="{Binding NavToJobCommand}"/>
+        </StackPanel>
+        <Grid Background="Gray" Grid.Row="1" />
+        <!--在此处设置Region,给一个名字即可-->
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="2" Margin="0,8,0,0"/>
     </Grid>
 </Window>
 

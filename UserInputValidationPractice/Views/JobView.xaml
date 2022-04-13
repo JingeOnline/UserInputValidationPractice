@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="UserInputValidationPractice.Views.JobView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserInputValidationPractice.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                            Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <TextBlock Text="Job - IDataErrorInfo + Data Annotations" HorizontalAlignment="Center"/>
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Id:" Grid.Row="0"/>
+            <Label Content="ProductName:" Grid.Row="1"/>
+            <Label Content="PickupDate:" Grid.Row="2"/>
+            <Label Content="DeliverDate:" Grid.Row="3"/>
+            <Label Content="Min_Temp:" Grid.Row="4"/>
+            <Label Content="Max_Temp:" Grid.Row="5"/>
+            <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateJobCommand}" Margin="0,8"/>
+            <!--使用IDataErrorInfo + Data Annotations进行验证。
+                    ValidatesOnDataErrors=True是一定要写的，但NotifyOnValidationError=True的作用现在还没看出来。-->
+            <!--NotifyOnValidationError属性表示当错误发生时，是否触发Validation.Error事件，可以再xmal中为任何控件添加该事件和事件处理器。-->
+            <TextBox Text="{Binding CreatedJob.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True}" 
+                        Grid.Row="0" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedJob.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True}" 
+                        Grid.Row="1" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedJob.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True,NotifyOnValidationError=True,
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
+                        Grid.Row="2" Grid.Column="1"/>
+            <TextBox Text="{Binding CreatedJob.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True,NotifyOnValidationError=True,
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
+                        Grid.Row="3" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedJob.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
+                        NotifyOnValidationError=True,ValidatesOnDataErrors=True}" 
+                        Grid.Row="4" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedJob.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
+                        NotifyOnValidationError=True,ValidatesOnDataErrors=True}" 
+                        Grid.Row="5" Grid.Column="1" />
+        </Grid>
+    </StackPanel>
+</UserControl>
