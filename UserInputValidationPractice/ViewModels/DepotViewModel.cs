@@ -11,34 +11,29 @@ using UserInputValidationPractice.Models;
 
 namespace UserInputValidationPractice.ViewModels
 {
-    /// <summary>
-    /// 使用IDataErrorInfo来验证
-    /// </summary>
-    public class OrderViewModel:BindableBase
+    public class DepotViewModel : BindableBase
     {
-        private Order _createdOrder;
-        public Order CreatedObject
+        private Depot _createdDepot;
+        public Depot CreatedObject
         {
-            get { return _createdOrder; }
-            set { SetProperty(ref _createdOrder, value); }
+            get { return _createdDepot; }
+            set { SetProperty(ref _createdDepot, value); }
         }
 
         public ICommand CreateCommand { get; set; }
 
-        public OrderViewModel()
+        public DepotViewModel()
         {
-            CreateCommand = new DelegateCommand(createOrderSave, canCreateOrderSave).ObservesProperty(() => CreatedObject.IsValid);
-            CreatedObject = new Order() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
-
+            CreateCommand = new DelegateCommand(createSave, canCreateSave);
+            CreatedObject = new Depot() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
         }
 
-        private bool canCreateOrderSave()
+        private bool canCreateSave()
         {
-            bool canSave = CreatedObject.IsValid;
-            return canSave;
+            return true;
         }
 
-        private void createOrderSave()
+        private void createSave()
         {
             MessageBox.Show($"Id={CreatedObject.Id}\n" +
                 $"ProductName={CreatedObject.ProductName}\n" +

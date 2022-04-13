@@ -44,29 +44,29 @@
             <Label Content="DeliverDate:" Grid.Row="3"/>
             <Label Content="Min_Temp:" Grid.Row="4"/>
             <Label Content="Max_Temp:" Grid.Row="5"/>
-            <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateOrderCommand}" Margin="0,8"/>
+            <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateCommand}" Margin="0,8"/>
             <!--显示ExceptionError，可以显示的设置ValidatesOnDataErrors=true,默认值就是true，所以省略-->
             <!--需要显示的设置属性ValidatesOnDataErrors=True，否则只会显示ExceptionError，IDataErrorInfo里面定义的错误不会显示。-->
-            <TextBox Text="{Binding CreatedOrder.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+            <TextBox Text="{Binding CreatedObject.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
                                     ValidatesOnDataErrors=True}" 
                                     Grid.Row="0" Grid.Column="1"/>
-            <TextBox Text="{Binding CreatedOrder.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+            <TextBox Text="{Binding CreatedObject.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
                                     ValidatesOnDataErrors=True}" 
                                     Grid.Row="1" Grid.Column="1" />
             <!--Without ConverterCulture, the date Format is not stable. Change the format as you change the date.-->
             <!--不适用ConverterCulture显示的数据格式不太稳定。 当你修改日期的时候，格式经常会来回跳转。-->
-            <TextBox Text="{Binding CreatedOrder.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+            <TextBox Text="{Binding CreatedObject.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
                                     StringFormat='{}{0:dd/MM/yy HH:mm:ss}', ConverterCulture='en-AU', Delay=500, ValidatesOnDataErrors=True}"
                                     Grid.Row="2" Grid.Column="1" />
-            <TextBox Text="{Binding CreatedOrder.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+            <TextBox Text="{Binding CreatedObject.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
                                     StringFormat='{}{0:dd/MM/yy HH:mm:ss}', ConverterCulture='en-AU', Delay=500, ValidatesOnDataErrors=True}" 
                                     Grid.Row="3" Grid.Column="1" />
             <!--这里使用了Delay=500，设置了500毫秒的延迟，否则根本无法输入小数点。每次一输，就验证失败，根本无法set属性值。-->
             <!--另一种解决办法是，把UpdateSourceTrigger改成LostFocus。-->
-            <TextBox Text="{Binding CreatedOrder.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
+            <TextBox Text="{Binding CreatedObject.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
                                     ValidatesOnDataErrors=True}" 
                                     Grid.Row="4" Grid.Column="1" />
-            <TextBox Text="{Binding CreatedOrder.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
+            <TextBox Text="{Binding CreatedObject.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
                                     ValidatesOnDataErrors=True}" 
                                     Grid.Row="5" Grid.Column="1" />
         </Grid>

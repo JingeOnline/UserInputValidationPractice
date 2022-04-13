@@ -27,6 +27,7 @@ namespace UserInputValidationPractice
             containerRegistry.RegisterForNavigation<OrderView>();
             containerRegistry.RegisterForNavigation<CustomerView>();
             containerRegistry.RegisterForNavigation<JobView>();
+            containerRegistry.RegisterForNavigation<DepotView>();
         }
     }
 }

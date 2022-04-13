@@ -11,6 +11,9 @@ using UserInputValidationPractice.Models;
 
 namespace UserInputValidationPractice.ViewModels
 {
+    /// <summary>
+    /// 使用INotifyDataErrorInfo来验证
+    /// </summary>
     public class CustomerViewModel:BindableBase
     {
 

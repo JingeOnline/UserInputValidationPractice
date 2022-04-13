@@ -11,21 +11,24 @@ using UserInputValidationPractice.Models;
 
 namespace UserInputValidationPractice.ViewModels
 {
+    /// <summary>
+    /// 使用IDataErrorInfo + Data Annotations来验证
+    /// </summary>
     public class JobViewModel:BindableBase
     {
         private Job _createdJob;
-        public Job CreatedJob
+        public Job CreatedObject
         {
             get { return _createdJob; }
             set { SetProperty(ref _createdJob, value); }
         }
 
-        public ICommand CreateJobCommand { get; set; }
+        public ICommand CreateCommand { get; set; }
 
         public JobViewModel()
         {
-            CreateJobCommand = new DelegateCommand(createJobSave, canCreateJobSave);
-            CreatedJob = new Job() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
+            CreateCommand = new DelegateCommand(createJobSave, canCreateJobSave);
+            CreatedObject = new Job() { PickupDate = DateTime.Now, DeliverDate = DateTime.Now };
         }
 
         private bool canCreateJobSave()
@@ -35,12 +38,12 @@ namespace UserInputValidationPractice.ViewModels
 
         private void createJobSave()
         {
-            MessageBox.Show($"Id={CreatedJob.Id}\n" +
-                $"ProductName={CreatedJob.ProductName}\n" +
-                $"PickupDate={CreatedJob.PickupDate}\n" +
-                $"DeliverDate={CreatedJob.DeliverDate}\n" +
-                $"Min_Temp={CreatedJob.Min_Temp}\n" +
-                $"Max_Temp={CreatedJob.Max_Temp}\n");
+            MessageBox.Show($"Id={CreatedObject.Id}\n" +
+                $"ProductName={CreatedObject.ProductName}\n" +
+                $"PickupDate={CreatedObject.PickupDate}\n" +
+                $"DeliverDate={CreatedObject.DeliverDate}\n" +
+                $"Min_Temp={CreatedObject.Min_Temp}\n" +
+                $"Max_Temp={CreatedObject.Max_Temp}\n");
         }
     }
 }

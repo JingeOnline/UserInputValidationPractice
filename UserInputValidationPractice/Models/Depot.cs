@@ -1,7 +1,6 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -10,25 +9,33 @@ using System.Threading.Tasks;
 namespace UserInputValidationPractice.Models
 {
     /// <summary>
-    /// 使用DataAnnotations和IDataErrorInfo验证
+    /// 使用DataAnnotations验证,需要手动创建两个类ValidationContext和Validator类
     /// 常用验证规则:Required,RegularExpression,StringLength,Range,Phone,Email,Url,CreditCard
     /// 先Set属性，再执行验证。
     /// </summary>
-    public class Job:BindableBase,IDataErrorInfo
+    public class Depot : DataAnnotationBase
     {
         private int _id;
         [Required]
         public int Id
         {
             get { return _id; }
-            set { SetProperty(ref _id, value); }
+            set
+            {
+                ValidateProperty("Id", value);
+                SetProperty(ref _id, value);
+            }
         }
         private string _productName;
-        [StringLength(5,MinimumLength =3)]
+        [StringLength(5, MinimumLength = 3)]
         public string ProductName
         {
             get { return _productName; }
-            set { SetProperty(ref _productName, value); }
+            set
+            {
+                ValidateProperty("ProductName", value);
+                SetProperty(ref _productName, value);
+            }
         }
 
         private DateTime _pickupDate;
@@ -45,39 +52,18 @@ namespace UserInputValidationPractice.Models
             set { SetProperty(ref _deliverDate, value); }
         }
         private double _min_Temp;
-        [Range(0.0,100.0)]
+        [Range(0.0, 100.0)]
         public double Min_Temp
         {
             get { return _min_Temp; }
             set { SetProperty(ref _min_Temp, value); }
         }
         private double _max_Temp;
-        [Range(0.0,100.0)]
+        [Range(0.0, 100.0)]
         public double Max_Temp
         {
             get { return _max_Temp; }
             set { SetProperty(ref _max_Temp, value); }
-        }
-
-        public string Error => null;
-
-        public string this[string columnName]
-        {
-            get
-            {
-                var validationResults = new List<ValidationResult>();
-
-                if (Validator.TryValidateProperty(
-                        GetType().GetProperty(columnName).GetValue(this)
-                        , new ValidationContext(this)
-                        {
-                            MemberName = columnName
-                        }
-                        , validationResults))
-                    return null;
-
-                return validationResults.First().ErrorMessage;
-            }
         }
     }
 }
