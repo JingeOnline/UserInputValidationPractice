@@ -54,7 +54,7 @@
                                     ValidatesOnDataErrors=True}" 
                                     Grid.Row="1" Grid.Column="1" />
             <!--Without ConverterCulture, the date Format is not stable. Change the format as you change the date.-->
-            <!--不适用ConverterCulture显示的数据格式不太稳定。 当你修改日期的时候，格式经常会来回跳转。-->
+            <!--不使用ConverterCulture显示的数据格式不太稳定。 当你修改日期的时候，格式经常会来回跳转。-->
             <TextBox Text="{Binding CreatedObject.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
                                     StringFormat='{}{0:dd/MM/yy HH:mm:ss}', ConverterCulture='en-AU', Delay=500, ValidatesOnDataErrors=True}"
                                     Grid.Row="2" Grid.Column="1" />

@@ -55,18 +55,18 @@
                         ValidatesOnExceptions=True}" 
                         Grid.Row="1" Grid.Column="1" />
             <TextBox Text="{Binding CreatedObject.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True,NotifyOnValidationError=True,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
+                        ValidatesOnExceptions=True,Delay=500,
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}',ConverterCulture='en-AU'}" 
                         Grid.Row="2" Grid.Column="1"/>
             <TextBox Text="{Binding CreatedObject.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True,NotifyOnValidationError=True,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
+                        ValidatesOnExceptions=True,Delay=500,
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}',ConverterCulture='en-AU'}" 
                         Grid.Row="3" Grid.Column="1" />
             <TextBox Text="{Binding CreatedObject.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
-                        NotifyOnValidationError=True,ValidatesOnDataErrors=True}" 
+                        ValidatesOnExceptions=True}" 
                         Grid.Row="4" Grid.Column="1" />
             <TextBox Text="{Binding CreatedObject.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
-                        NotifyOnValidationError=True,ValidatesOnDataErrors=True}" 
+                        ValidatesOnExceptions=True}" 
                         Grid.Row="5" Grid.Column="1" />
         </Grid>
     </StackPanel>
