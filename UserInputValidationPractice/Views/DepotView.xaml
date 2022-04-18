@@ -22,7 +22,7 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock Text="Job - IDataErrorInfo + Data Annotations" HorizontalAlignment="Center"/>
+        <TextBlock Text="Job - Only Data Annotations" HorizontalAlignment="Center"/>
         <Grid Margin="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -45,14 +45,14 @@
             <Label Content="Min_Temp:" Grid.Row="4"/>
             <Label Content="Max_Temp:" Grid.Row="5"/>
             <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateCommand}" Margin="0,8"/>
-            <!--使用IDataErrorInfo + Data Annotations进行验证。
-                    ValidatesOnDataErrors=True是一定要写的，但NotifyOnValidationError=True的作用现在还没看出来。-->
-            <!--NotifyOnValidationError属性表示当错误发生时，是否触发Validation.Error事件，可以再xmal中为任何控件添加该事件和事件处理器。-->
+            <!--单独使用Data Annotations进行验证, 后台使用自定义的ValidateProperty方法，通过抛出异常的方式来验证-->
+            <!--在Xaml中只需开启ValidatesOnExceptions=True-->
+            <!--在使用ValidatesOnExceptions的时候，需要在Release模式下进行，否则在Debug模式下每次验证失败编译器都会跳转到异常处-->
             <TextBox Text="{Binding CreatedObject.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True}" 
+                        ValidatesOnExceptions=True}" 
                         Grid.Row="0" Grid.Column="1" />
             <TextBox Text="{Binding CreatedObject.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        ValidatesOnDataErrors=True}" 
+                        ValidatesOnExceptions=True}" 
                         Grid.Row="1" Grid.Column="1" />
             <TextBox Text="{Binding CreatedObject.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
                         ValidatesOnDataErrors=True,NotifyOnValidationError=True,

@@ -15,6 +15,7 @@ namespace UserInputValidationPractice.Models
             ValidationContext context = new ValidationContext(this, null, null);
             context.MemberName = popertyName;
             //如果验证规则不通过，该方法会抛出异常
+            //在调试状态下运行，程序会在异常的时候跳到此处，然后Continue可以继续运行。如果在Release模式下运行，就不会在跳到此处。
             Validator.ValidateProperty(value, context);
         }
     }

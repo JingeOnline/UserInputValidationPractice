@@ -14,7 +14,7 @@ namespace UserInputValidationPractice.Models
     /// 常用验证规则:Required,RegularExpression,StringLength,Range,Phone,Email,Url,CreditCard
     /// 先Set属性，再执行验证。
     /// </summary>
-    public class Job:BindableBase,IDataErrorInfo
+    public class Job : BindableBase, IDataErrorInfo
     {
         private int _id;
         [Required]
@@ -24,7 +24,7 @@ namespace UserInputValidationPractice.Models
             set { SetProperty(ref _id, value); }
         }
         private string _productName;
-        [StringLength(5,MinimumLength =3)]
+        [StringLength(5, MinimumLength = 3)]
         public string ProductName
         {
             get { return _productName; }
@@ -45,14 +45,14 @@ namespace UserInputValidationPractice.Models
             set { SetProperty(ref _deliverDate, value); }
         }
         private double _min_Temp;
-        [Range(0.0,100.0)]
+        [Range(0.0, 100.0)]
         public double Min_Temp
         {
             get { return _min_Temp; }
             set { SetProperty(ref _min_Temp, value); }
         }
         private double _max_Temp;
-        [Range(0.0,100.0)]
+        [Range(0.0, 100.0)]
         public double Max_Temp
         {
             get { return _max_Temp; }
@@ -61,22 +61,30 @@ namespace UserInputValidationPractice.Models
 
         public string Error => null;
 
-        public string this[string columnName]
+        public string this[string propertyName]
         {
             get
             {
-                var validationResults = new List<ValidationResult>();
+                object value = GetType().GetProperty(propertyName).GetValue(this);
 
-                if (Validator.TryValidateProperty(
-                        GetType().GetProperty(columnName).GetValue(this)
-                        , new ValidationContext(this)
-                        {
-                            MemberName = columnName
-                        }
-                        , validationResults))
+                ValidationContext validationContext = new ValidationContext(this)
+                {
+                    MemberName = propertyName
+                };
+
+                List<ValidationResult> validationResults = new List<ValidationResult>();
+
+                bool propertyIsValid = Validator.TryValidateProperty(value, validationContext, validationResults);
+
+                if (propertyIsValid)
+                {
                     return null;
+                }
+                else
+                {
+                    return validationResults.First().ErrorMessage;
+                }
 
-                return validationResults.First().ErrorMessage;
             }
         }
     }
