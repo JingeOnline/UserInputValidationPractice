@@ -59,15 +59,20 @@
     </ApplicationDefinition>
     <Compile Include="Models\DataAnnotationBase.cs" />
     <Compile Include="Models\Depot.cs" />
+    <Compile Include="Models\Truck.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\DepotViewModel.cs" />
     <Compile Include="ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\TruckViewModel.cs" />
     <Compile Include="Views\DepotView.xaml.cs">
       <DependentUpon>DepotView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TruckView.xaml.cs">
+      <DependentUpon>TruckView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CustomerView.xaml">
       <SubType>Designer</SubType>
@@ -106,6 +111,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\OrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TruckView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

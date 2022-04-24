@@ -13,6 +13,7 @@ namespace UserInputValidationPractice.Models
     /// 使用DataAnnotations和IDataErrorInfo验证
     /// 常用验证规则:Required,RegularExpression,StringLength,Range,Phone,Email,Url,CreditCard
     /// 先Set属性，再执行验证。
+    /// 这种方式的缺点是，初始化对象的时候，由于没有调用属性的set方法，所有属性都不会进行验证，只有稍后用户输入的时候才开始验证。
     /// </summary>
     public class Job : BindableBase, IDataErrorInfo
     {
@@ -65,13 +66,14 @@ namespace UserInputValidationPractice.Models
         {
             get
             {
+                //此处使用反射来获取某个属性的属性值
                 object value = GetType().GetProperty(propertyName).GetValue(this);
-
+                //创建一个用来验证的验证上下文实例
                 ValidationContext validationContext = new ValidationContext(this)
                 {
                     MemberName = propertyName
                 };
-
+                //该List用来储存一个属性多条验证规则的结果
                 List<ValidationResult> validationResults = new List<ValidationResult>();
 
                 bool propertyIsValid = Validator.TryValidateProperty(value, validationContext, validationResults);

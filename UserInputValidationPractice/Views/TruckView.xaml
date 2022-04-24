@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="UserInputValidationPractice.Views.TruckView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserInputValidationPractice.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                            Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <TextBlock Text="Truck - Microsoft.Practices.EnterpriseLibrary.Validation + IDataErrorInfo (Tabs app method)" HorizontalAlignment="Center"/>
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Id:" Grid.Row="0"/>
+            <Label Content="ProductName:" Grid.Row="1"/>
+            <Label Content="PickupDate:" Grid.Row="2"/>
+            <Label Content="DeliverDate:" Grid.Row="3"/>
+            <Label Content="Min_Temp:" Grid.Row="4"/>
+            <Label Content="Max_Temp:" Grid.Row="5"/>
+            <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateCommand}" Margin="0,8"/>
+
+            <!--在Xaml中只需开启ValidatesOnDataErrors=True-->
+            <TextBox Text="{Binding CreatedObject.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True}" 
+                        Grid.Row="0" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedObject.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True}" 
+                        Grid.Row="1" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedObject.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True,Delay=500,
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}',ConverterCulture='en-AU'}" 
+                        Grid.Row="2" Grid.Column="1"/>
+            <TextBox Text="{Binding CreatedObject.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
+                        ValidatesOnDataErrors=True,Delay=500,
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}',ConverterCulture='en-AU'}" 
+                        Grid.Row="3" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedObject.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
+                        ValidatesOnDataErrors=True}" 
+                        Grid.Row="4" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedObject.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500,
+                        ValidatesOnDataErrors=True}" 
+                        Grid.Row="5" Grid.Column="1" />
+        </Grid>
+    </StackPanel>
+</UserControl>

@@ -9,7 +9,7 @@ namespace UserInputValidationPractice.Models
     /// 使用IDataErrorInfo，优点是简单易用。
     /// 缺点是无论输入值是否合法，都会执行属性的set方法，然后再去String this[string PropertyName]查询，返回验证结果。
     /// </summary>
-    public class Order:BindableBase, IDataErrorInfo
+    public class Order : BindableBase, IDataErrorInfo
     {
         private int _id;
         public int Id
@@ -19,7 +19,7 @@ namespace UserInputValidationPractice.Models
         }
 
         private string _productName;
-        public  string ProductName
+        public string ProductName
         {
             get { return _productName; }
             set { SetProperty(ref _productName, value); }
@@ -46,7 +46,7 @@ namespace UserInputValidationPractice.Models
             set { SetProperty(ref _min_Temp, value); }
         }
 
-        private double  _max_Temp;
+        private double _max_Temp;
         public double Max_Temp
         {
             get { return _max_Temp; }
@@ -55,15 +55,13 @@ namespace UserInputValidationPractice.Models
 
         public string Error
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
         private bool _isValid;
         /// <summary>
-        /// 改属性是用来判断整个对象有没有非法的属性，只有所有属性都通过验证，才返回true。
+        /// 该属性是用来判断整个对象有没有非法的属性，只有所有属性都通过验证，才返回true。
+        /// 该属性是用来给CanSaveCommand用的。
         /// </summary>
         public bool IsValid
         {
@@ -75,20 +73,22 @@ namespace UserInputValidationPractice.Models
         //用来储存对象中每个属性的验证状态，合法为true，非法为false，key为属性名称。
         private Dictionary<string, bool> PropertyValidDictionary = new Dictionary<string, bool>();
 
-        //查看一个对象的所有属性中是否存在非法值，如果存在任意一个非法值，返回false。
-        private bool varifyEachProperty(string key, bool value)
+        //查看一个对象的所有属性是否全部合法，如果存在任意一个非法值，返回false。
+        private void varifyObject(string propertyName, bool noError)
         {
             //存在则更新，不存在则创建
-            PropertyValidDictionary[key] = value;
+            PropertyValidDictionary[propertyName] = noError;
 
-            foreach (bool val in PropertyValidDictionary.Values)
+            foreach (bool value in PropertyValidDictionary.Values)
             {
-                if (!val)
+                if (!value)
                 {
-                    return false;
+                    IsValid = false;
+                    return;
                 }
             }
-            return true;
+            IsValid = true;
+            return;
         }
         #endregion
 
@@ -131,7 +131,7 @@ namespace UserInputValidationPractice.Models
                             break;
                         }
                 }
-                IsValid=varifyEachProperty(propertyName, errorMessage == string.Empty);
+                varifyObject(propertyName, errorMessage == string.Empty);
                 return errorMessage;
             }
         }
