@@ -24,19 +24,19 @@ namespace UserInputValidationPractice.Models
 
 
 
-        //使用字典来储存每个属性，和该属性的错误
+        //使用字典来储存每个属性，和该属性的错误（自定义的属性）
         private readonly Dictionary<string, List<string>> _errorByPropertyName = new Dictionary<string, List<string>>();
 
 
-        //当触发该事件的时候，会自动重新执行GetErrors方法
+        //当触发该事件的时候，会自动重新执行GetErrors方法（来自于接口）
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        //如果验证失败，有错误，需要返回true。
+        //如果验证失败，有错误，需要返回true。（来自于接口）
         //如果字典中有错误，返回true，没有错误，返回false。也就是检查整个对象有没有错误。
         public bool HasErrors => _errorByPropertyName.Any();
 
 
-        //针对某个特定的属性，返回其错误列表
+        //针对某个特定的属性，返回其错误列表（来自于接口）
         public IEnumerable GetErrors(string propertyName)
         {
             if (propertyName != null && _errorByPropertyName.ContainsKey(propertyName))
@@ -51,13 +51,13 @@ namespace UserInputValidationPractice.Models
             }
         }
 
-        //Raise ErrorsChanged事件 
+        //触发（Raise） ErrorsChanged事件，通知UI （自定义方法）
         protected virtual void OnErrorsChanged(DataErrorsChangedEventArgs e)
         {
             ErrorsChanged?.Invoke(this, e);
         }
 
-        //添加属性名和其名下的错误
+        //添加属性名和其名下的错误(自定义的方法)
         protected void AddError(string error, [CallerMemberName]string? propertyName=null)
         {
             if (propertyName == null) return;
@@ -77,6 +77,7 @@ namespace UserInputValidationPractice.Models
             }
         }
 
+        //清除属性名和其名下的错误（自定义的方法）
         protected void ClearErrors([CallerMemberName] string? propertyName = null)
         {
             if (propertyName == null) return;
