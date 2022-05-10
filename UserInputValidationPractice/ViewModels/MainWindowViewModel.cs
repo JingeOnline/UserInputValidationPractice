@@ -22,6 +22,7 @@ namespace UserInputValidationPractice.ViewModels
         public ICommand NavToJobCommand { get; set; }
         public ICommand NavToDepotCommand { get; set; }
         public ICommand NavToTruckCommand { get; set; }
+        public ICommand NavToInvoiceCommand { get; set; }
 
         private IRegionManager _regionManager;
 
@@ -32,6 +33,7 @@ namespace UserInputValidationPractice.ViewModels
             NavToJobCommand = new DelegateCommand(navToJob);
             NavToDepotCommand = new DelegateCommand(navToDepot);
             NavToTruckCommand = new DelegateCommand(navToTruck);
+            NavToInvoiceCommand = new DelegateCommand(navToInvoice);
             _regionManager = regionManager;
         }
 
@@ -60,6 +62,11 @@ namespace UserInputValidationPractice.ViewModels
         private void navToCustomer()
         {
             _regionManager.RequestNavigate("ContentRegion", "CustomerView");
+        }
+
+        private void navToInvoice()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "InvoiceView");
         }
     }
 }

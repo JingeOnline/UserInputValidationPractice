@@ -37,6 +37,7 @@
             <Button Content="Job" Command="{Binding NavToJobCommand}"/>
             <Button Content="Depot" Command="{Binding NavToDepotCommand}"/>
             <Button Content="Truck" Command="{Binding NavToTruckCommand}"/>
+            <Button Content="Invoice" Command="{Binding NavToInvoiceCommand}"/>
         </StackPanel>
         <Grid Background="Gray" Grid.Row="1" />
         <!--在此处设置Region,给一个名字即可-->

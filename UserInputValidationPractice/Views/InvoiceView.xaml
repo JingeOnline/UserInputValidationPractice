@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="UserInputValidationPractice.Views.InvoiceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserInputValidationPractice.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                            Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Invoice - Use Property Exception" HorizontalAlignment="Center"/>
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Id:" Grid.Row="0"/>
+            <Label Content="ProductName:" Grid.Row="1"/>
+            <Label Content="PickupDate:" Grid.Row="2"/>
+            <Label Content="DeliverDate:" Grid.Row="3"/>
+            <Label Content="Min_Temp:" Grid.Row="4"/>
+            <Label Content="Max_Temp:" Grid.Row="5"/>
+            <Button Content="Create" Grid.ColumnSpan="2" Grid.Row="6" Command="{Binding CreateCommand}" Margin="0,8"/>
+
+            <!--需要手动显式的设置ValidatesOnExceptions=True，否则并不会显示错误信息-->
+            <TextBox Text="{Binding CreatedObject.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+                                    ValidatesOnExceptions=True}" 
+                                    Grid.Row="0" Grid.Column="1"/>
+            <TextBox Text="{Binding CreatedObject.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+                                    ValidatesOnExceptions=True}" 
+                                    Grid.Row="1" Grid.Column="1" />
+            <!--Without ConverterCulture, the date Format is not stable. Change the format as you change the date.-->
+            <!--不使用ConverterCulture显示的数据格式不太稳定。 当你修改日期的时候，格式经常会来回跳转。-->
+            <TextBox Text="{Binding CreatedObject.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+                                    StringFormat='{}{0:dd/MM/yy HH:mm:ss}', ConverterCulture='en-AU', Delay=500, ValidatesOnExceptions=True}"
+                                    Grid.Row="2" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedObject.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+                                    StringFormat='{}{0:dd/MM/yy HH:mm:ss}', ConverterCulture='en-AU', Delay=500, ValidatesOnExceptions=True}" 
+                                    Grid.Row="3" Grid.Column="1" />
+            <!--这里使用了Delay=500，设置了500毫秒的延迟，否则根本无法输入小数点。每次一输，就验证失败，根本无法set属性值。-->
+            <!--另一种解决办法是，把UpdateSourceTrigger改成LostFocus。-->
+            <TextBox Text="{Binding CreatedObject.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
+                                    ValidatesOnExceptions=True}" 
+                                    Grid.Row="4" Grid.Column="1" />
+            <TextBox Text="{Binding CreatedObject.Max_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500, 
+                                    ValidatesOnExceptions=True}" 
+                                    Grid.Row="5" Grid.Column="1" />
+        </Grid>
+    </StackPanel>
+</UserControl>
