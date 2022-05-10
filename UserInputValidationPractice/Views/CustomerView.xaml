@@ -50,10 +50,10 @@
             <TextBox Text="{Binding CreatedCustomer.ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                  Grid.Row="1" Grid.Column="1" />
             <TextBox Text="{Binding CreatedCustomer.PickupDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}',ConverterCulture='en-AU',Delay=500}" 
                  Grid.Row="2" Grid.Column="1" />
             <TextBox Text="{Binding CreatedCustomer.DeliverDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,
-                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}'}" 
+                        StringFormat='{}{0:dd/MM/yy HH:mm:ss}',ConverterCulture='en-AU',Delay=500}" 
                  Grid.Row="3" Grid.Column="1" />
             <TextBox Text="{Binding CreatedCustomer.Min_Temp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500}" 
                  Grid.Row="4" Grid.Column="1" />
