@@ -11,17 +11,18 @@ namespace UserInputValidationPractice.Models
     /// <summary>
     /// 使用DataAnnotations验证,继承DataAnnotationBase类。
     /// 常用验证规则:Required,RegularExpression,StringLength,Range,Phone,Email,Url,CreditCard
-    /// 先Set属性，再执行验证。
+    /// 先验证，验证通过才set属性
     /// </summary>
     public class Depot : DataAnnotationBase
     {
         private int _id;
-        [Required]
+        [Required(ErrorMessage ="Id field is required.")]
         public int Id
         {
             get { return _id; }
             set
             {
+                //这里使用了手动验证，方法来自于自己写的DataAnnotationBase类
                 ValidateProperty("Id", value);
                 SetProperty(ref _id, value);
             }
@@ -34,11 +35,12 @@ namespace UserInputValidationPractice.Models
             get { return _productName; }
             set
             {
+                //这里使用了手动验证，方法来自于自己写的DataAnnotationBase类
                 ValidateProperty("ProductName", value);
                 SetProperty(ref _productName, value);
             }
         }
-        //这里的Range根本不起作用，原因不明
+        //如果不使用手动验证，这里的Range根本不起作用，原因不明
         private DateTime _pickupDate;
         [Range(typeof(DateTime), "1/4/2022", "30/4/2022")]
         public DateTime PickupDate
@@ -46,7 +48,7 @@ namespace UserInputValidationPractice.Models
             get { return _pickupDate; }
             set { SetProperty(ref _pickupDate, value); }
         }
-        //这里的Range根本不起作用，原因不明
+        //如果不使用手动验证，这里的Range根本不起作用，原因不明
         private DateTime _deliverDate;
         [Range(typeof(DateTime), "1/4/2022", "30/4/2022")]
         public DateTime DeliverDate
@@ -60,7 +62,12 @@ namespace UserInputValidationPractice.Models
         public double Min_Temp
         {
             get { return _min_Temp; }
-            set { SetProperty(ref _min_Temp, value); }
+            set 
+            {
+                //这里使用了手动验证，方法来自于自己写的DataAnnotationBase类
+                ValidateProperty(nameof(Max_Temp), value);
+                SetProperty(ref _min_Temp, value); 
+            }
         }
         //这里的Range根本不起作用，原因不明
         private double _max_Temp;
@@ -68,7 +75,12 @@ namespace UserInputValidationPractice.Models
         public double Max_Temp
         {
             get { return _max_Temp; }
-            set { SetProperty(ref _max_Temp, value); }
+            set 
+            {
+                //这里使用了手动验证，方法来自于自己写的DataAnnotationBase类
+                ValidateProperty(nameof(Max_Temp),value);
+                SetProperty(ref _max_Temp, value); 
+            }
         }
     }
 }

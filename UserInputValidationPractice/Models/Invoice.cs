@@ -9,6 +9,8 @@ namespace UserInputValidationPractice.Models
 {
     /// <summary>
     /// 使用抛出Exception的方式进行验证
+    /// 优点是：验证通过才给set赋值，并且使用起来方便简单
+    /// 缺点：无法获取整个对象是否Valid
     /// </summary>
     public class Invoice : BindableBase
     {
@@ -55,9 +57,9 @@ namespace UserInputValidationPractice.Models
             get { return _min_Temp; }
             set
             {
-                if (value < 0)
+                if (value < 0 || value>100)
                 {
-                    throw new Exception("Min_Temp cannot be negative.");
+                    throw new Exception("Min_Temp can only be 0 - 100.");
                 }
                 SetProperty(ref _min_Temp, value);
             }
@@ -66,7 +68,14 @@ namespace UserInputValidationPractice.Models
         public double Max_Temp
         {
             get { return _max_Temp; }
-            set { SetProperty(ref _max_Temp, value); }
+            set 
+            {
+                if (value < 0 || value > 100)
+                {
+                    throw new Exception("Max_Temp can only be 0 - 100.");
+                }
+                SetProperty(ref _max_Temp, value); 
+            }
         }
     }
 }

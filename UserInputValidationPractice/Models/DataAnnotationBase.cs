@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace UserInputValidationPractice.Models
 {
     /// <summary>
+    /// 使用System.ComponentModel.DataAnnotations作为验证方法的辅助方法;
     /// 使用ValidationContext和Validator来验证。
     /// </summary>
     public class DataAnnotationBase:BindableBase

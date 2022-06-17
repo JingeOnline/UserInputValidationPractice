@@ -120,12 +120,16 @@ namespace UserInputValidationPractice.Models
                         }
                     case nameof(Min_Temp):
                         {
+                            if (Min_Temp < 1 || Min_Temp > 100)
+                                errorMessage = "Min_Temp must between 1 - 100";
                             if (Min_Temp > Max_Temp)
                                 errorMessage = "Min_Temp cannot bigger than Max_Temp.";
                             break;
                         }
                     case nameof(Max_Temp):
                         {
+                            if (Max_Temp < 1 || Max_Temp > 100)
+                                errorMessage = "Max_Temp must between 1 - 100";
                             if (Min_Temp > Max_Temp)
                                 errorMessage = "Min_Temp cannot bigger than Max_Temp.";
                             break;

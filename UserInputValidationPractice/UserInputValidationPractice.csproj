@@ -57,15 +57,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\AnnotationValidationBase.cs" />
+    <Compile Include="Models\Bottle.cs" />
     <Compile Include="Models\DataAnnotationBase.cs" />
     <Compile Include="Models\Depot.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Truck.cs" />
+    <Compile Include="ViewModels\BottleViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\DepotViewModel.cs" />
     <Compile Include="ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\TruckViewModel.cs" />
+    <Compile Include="Views\BottleView.xaml.cs">
+      <DependentUpon>BottleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DepotView.xaml.cs">
       <DependentUpon>DepotView.xaml</DependentUpon>
     </Compile>
@@ -79,6 +85,10 @@
     <Compile Include="Views\TruckView.xaml.cs">
       <DependentUpon>TruckView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\BottleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
